@@ -1,0 +1,36 @@
+# Compiler
+CC = gcc
+
+# Compiler flags
+CFLAGS = -Wall -Werror
+
+# Check for OS and set platform-specific variables
+ifeq ($(OS),Windows_NT)
+    # Windows specific settings
+    OUT = string_duplication.exe
+    RM = del /f
+else
+    # Ubuntu (Linux) specific settings
+    EXE = string_duplication
+    RM = rm -f
+endif
+
+# Source files
+SRC = main.c duplication.c test.c test_alloc_fail.c \
+      ../../utils/utils.c \
+      ../../utils/test_cases/print_test_case_details.c \
+      ../../utils/test_cases/update_test_case_status.c \
+      ../../utils/test_cases/print_test_case_num.c \
+      ../../utils/test_cases/run_and_validate_test.c \
+      ../../utils/test_cases/create_shared_test_case.c \
+     ../../utils/test_malloc/test_malloc.c
+ 
+# Rule to build the output binary
+$(OUT): $(SRC)
+	$(CC) $(CFLAGS) -o $(OUT) $(SRC)
+
+# Rule to clean up the build
+clean:
+	$(RM) $(OUT)
+
+.PHONY: clean
