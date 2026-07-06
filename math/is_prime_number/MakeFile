@@ -1,0 +1,35 @@
+# Compiler
+CC = gcc
+
+# Compiler flags
+CFLAGS = -Wall -Werror
+
+# Check for OS and set platform-specific variables
+ifeq ($(OS),Windows_NT)
+    # Windows specific settings
+    OUT = is_prime_number.exe
+    RM = del /f
+else
+    # Ubuntu (Linux) specific settings
+    EXE = is_prime_number
+    RM = rm -f
+endif
+
+# Source files
+SRC = main.c test.c is_prime_number.c \
+ ../../utils/test_cases/print_test_case_details.c \
+ ../../utils/test_cases/update_test_case_status.c \
+ ../../utils/test_cases/print_test_case_num.c \
+ ../../utils/test_cases/run_and_validate_test.c \
+ ../../utils/test_cases/create_shared_test_case.c \
+ ../../utils/utils.c 
+
+# Rule to build the output binary
+$(OUT): $(SRC)
+	$(CC) $(CFLAGS) -o $(OUT) $(SRC)
+
+# Rule to clean up the build
+clean:
+	$(RM) $(OUT)
+
+.PHONY: clean
